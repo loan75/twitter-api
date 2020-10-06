@@ -25,6 +25,7 @@ class TweetResource(Resource):
     def get(self):
         return tweet_repository.tweets
 
+    @api.response(201, 'Tweet created')
     @api.expect(message_parser)
     @api.marshal_with(tweet)
     def post(self):
@@ -48,6 +49,7 @@ class TweetResource(Resource):
         else:
             return tweet
 
+    @api.response(204, 'Tweet deleted')
     @api.marshal_with(tweet)
     def delete(self, id):
         is_deleted = tweet_repository.delete(id)
@@ -56,6 +58,7 @@ class TweetResource(Resource):
         else:
             api.abort(404)
 
+    @api.response(201, 'Tweet updated')
     @api.expect(message_parser)
     @api.marshal_with(tweet)
     def put(self, id):
